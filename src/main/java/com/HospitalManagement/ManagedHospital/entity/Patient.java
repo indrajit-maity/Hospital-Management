@@ -25,5 +25,5 @@ public class Patient {
     private LocalDate birthdate;
     @Column(nullable = false,unique = true)
     private String email;
-    private String gender;
+//    private String gender;
 }
