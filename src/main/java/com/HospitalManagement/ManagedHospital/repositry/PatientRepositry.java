@@ -2,7 +2,10 @@ package com.HospitalManagement.ManagedHospital.repositry;
 
 import com.HospitalManagement.ManagedHospital.entity.Patient;
 //import com.SpringBoot.HospitalManagement.entity.Patient;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
@@ -16,6 +19,9 @@ public interface PatientRepositry extends JpaRepository<Patient,Long> {
     List<Patient> findByNameAndDisease(String name, String fever);
 
     List<Patient> findByNameOrEmail(String name, String email);
+
+    @Query("SELECT p FROM Patient p")
+    Page<Patient> findAllPatients(Pageable pageable);
 
 //    List<Patient> findByNameOrEmail(LocalDate of, String mail);
 

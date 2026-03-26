@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDate;
 
@@ -18,12 +19,16 @@ public class Patient {
     private Long id;
     @Column(nullable = false,unique = true)
     private String name;
-
-//    @ToString.Exclude
-    private String disease;
-    private long phone;
     private LocalDate birthdate;
     @Column(nullable = false,unique = true)
     private String email;
-//    private String gender;
+    private String gender;
+    private String disease;
+
+    @CreationTimestamp
+    @Column(updatable = true)
+    private LocalDate createdAt;
+
+    @Enumerated(EnumType.STRING)
+    private Insurance insurance;
 }

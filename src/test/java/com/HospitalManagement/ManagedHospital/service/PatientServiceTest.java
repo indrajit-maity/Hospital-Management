@@ -12,6 +12,9 @@ import org.mockito.Mock;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -49,19 +52,25 @@ class PatientServiceTest {
     }
     @Test
     public void testQuery(){
-     Optional<Patient> patient=patientRepositry.findById(12L);
-        Patient p=patient.get();
-        System.out.println(p.getName());
-        System.out.println(p.getDisease());
-        System.out.println(p.getPhone());
-        System.out.println(p.getId());
-        List<Patient> patientList=patientRepositry.findByNameAndDisease("Indrajit Maity","fever");
-        for(Patient patient1:patientList){
-            System.out.println(patient1.toString());
+//     Optional<Patient> patient=patientRepositry.findById(12L);
+//        Patient p=patient.get();
+//        System.out.println(p.getName());
+//        System.out.println(p.getDisease());
+//        System.out.println(p.getPhone());
+//        System.out.println(p.getId());
+//        List<Patient> patientList=patientRepositry.findByNameAndDisease("Indrajit Maity","fever");
+//        for(Patient patient1:patientList){
+//            System.out.println(patient1.toString());
+//        }
+
+//        List<Patient> patients=patientRepositry.findByNameOrEmail("Kamal Maity","2005indrajitmaity@gmail.com");
+//        System.out.println(patients);
+
+        Page<Patient> patients=patientRepositry.findAllPatients(PageRequest.of(0,5, Sort.by("name")));
+        for(Patient patient1:patients){
+            System.out.println(patient1);
         }
 
-        List<Patient> patients=patientRepositry.findByNameOrEmail("Kamal Maity","2005indrajitmaity@gmail.com");
-        System.out.println(patients);
     }
 
     @Test
