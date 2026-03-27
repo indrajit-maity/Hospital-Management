@@ -2,10 +2,17 @@ package com.HospitalManagement.ManagedHospital.entity;
 
 
 import jakarta.persistence.*;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
+
+@ToString
 @Entity
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Appointment {
 
     @Id
