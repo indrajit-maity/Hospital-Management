@@ -1,18 +1,22 @@
 package com.HospitalManagement.ManagedHospital.entity;
 
+import com.HospitalManagement.ManagedHospital.entity.type.BloodGroupType;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @ToString
 @Entity
 @Getter
 @Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Patient {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,6 +33,17 @@ public class Patient {
     @Column(updatable = true)
     private LocalDate createdAt;
 
+
     @Enumerated(EnumType.STRING)
+    private BloodGroupType bloodGroup;
+
+    @OneToOne(cascade = {CascadeType.ALL},orphanRemoval = true)//owning side
+    @JoinColumn(name = "patient_insurance_id")
     private Insurance insurance;
+
+
+    @OneToMany(mappedBy = "patient")
+    @ToString.Exclude
+    private List<Appointment> appointments=new ArrayList<>();
+
 }

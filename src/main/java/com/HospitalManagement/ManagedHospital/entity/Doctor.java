@@ -1,16 +1,26 @@
 package com.HospitalManagement.ManagedHospital.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Doctor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-    private String name;
-    private String qualification;
+    private Long id;
+    @Column(nullable = false,length = 100)
+    private  String name;
+    @Column(length = 100)
+    private String specalization;
+    @Column(nullable = false,unique = true,length = 100)
     private String email;
+
+    @OneToMany(mappedBy = "doctor")
+    private List<Appointment> appointments;
+
+    @ManyToMany(mappedBy = "doctors")
+    private Set<Department> departments=new HashSet<>();
 }
