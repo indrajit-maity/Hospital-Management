@@ -42,7 +42,7 @@ public class Patient {
     private Insurance insurance;
 
 
-    @OneToMany(mappedBy = "patient")
+    @OneToMany(mappedBy = "patient",cascade = {CascadeType.REMOVE},orphanRemoval = true,fetch = FetchType.LAZY)
     @ToString.Exclude
     private List<Appointment> appointments=new ArrayList<>();
 

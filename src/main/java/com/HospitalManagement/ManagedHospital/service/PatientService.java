@@ -31,4 +31,5 @@ public class PatientService {
         List<Patient> patients=patientRepositry.findAll();
         return patients.stream().toList();
     }
+
 }

@@ -2,12 +2,19 @@ package com.HospitalManagement.ManagedHospital.entity;
 
 
 import jakarta.persistence.*;
+import lombok.*;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 @Entity
+@Builder
+@ToString
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Department {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

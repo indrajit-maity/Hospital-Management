@@ -75,5 +75,7 @@ class PatientServiceTest {
 
     @Test
     void getallpatient() {
+      List<Patient> patientList=patientRepositry.findAll();
+      System.out.println(patientList);
     }
 }

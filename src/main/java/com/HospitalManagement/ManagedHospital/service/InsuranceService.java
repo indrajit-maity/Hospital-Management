@@ -20,10 +20,20 @@ public class InsuranceService {
     @Transactional
     public Patient assignInsurancetoPatient(Insurance insurance,Long patientid){
         Patient patient=patientRepositry.findById(patientid)
-                .orElseThrow(()->new EntityNotFoundException("Patient not found with id: " + patientid));
+                .orElseThrow(
+                ()->new EntityNotFoundException("Patient not found with id: " + patientid));
         patient.setInsurance(insurance);
         insurance.setPatient(patient);
         return patient;
     }
 
+    @Transactional
+    public Patient diassociateInsurancefrompatient(Long patient_id){
+        Patient patient=patientRepositry.findById(patient_id)
+                                        .orElseThrow(
+                                        ()->new IllegalArgumentException("Patient not exits with the id:"+patient_id));
+        patient.setInsurance(null);
+
+        return patient;
+    }
 }

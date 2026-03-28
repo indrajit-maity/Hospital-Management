@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 
 @ToString
 @Entity
+@Builder
 @Getter
 @Setter
 @AllArgsConstructor
@@ -26,11 +27,13 @@ public class Appointment {
     private String reason;
 
     @ManyToOne
+    @ToString.Exclude
     @JoinColumn(name = "patient_id",nullable = false)
     private Patient patient;
 
 
     @ManyToOne
+//    @ToString.Exclude
     @JoinColumn(name = "doctor_id",nullable = false)
     private Doctor doctor;
 }

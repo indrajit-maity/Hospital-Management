@@ -1,12 +1,20 @@
 package com.HospitalManagement.ManagedHospital.entity;
 
 import jakarta.persistence.*;
+import lombok.*;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 @Entity
+@Builder
+//@ToString
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Doctor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,8 +27,11 @@ public class Doctor {
     private String email;
 
     @OneToMany(mappedBy = "doctor")
-    private List<Appointment> appointments;
+    private List<Appointment> appointments=new ArrayList<>();
 
     @ManyToMany(mappedBy = "doctors")
     private Set<Department> departments=new HashSet<>();
+
+    @OneToMany(mappedBy = "doctor")
+    private List<Appointment> Appointments=new ArrayList<>();
 }
