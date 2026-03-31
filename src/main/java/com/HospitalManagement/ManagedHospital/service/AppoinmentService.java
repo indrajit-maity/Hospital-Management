@@ -1,5 +1,7 @@
 package com.HospitalManagement.ManagedHospital.service;
 
+import com.HospitalManagement.ManagedHospital.dto.AppointmentResponcedto;
+import com.HospitalManagement.ManagedHospital.dto.CreateAppointmentRequestDto;
 import com.HospitalManagement.ManagedHospital.entity.Appointment;
 import com.HospitalManagement.ManagedHospital.entity.Doctor;
 import com.HospitalManagement.ManagedHospital.entity.Patient;
@@ -8,6 +10,7 @@ import com.HospitalManagement.ManagedHospital.repositry.DoctorRepository;
 import com.HospitalManagement.ManagedHospital.repositry.PatientRepositry;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -16,18 +19,23 @@ public class AppoinmentService {
     private  final AppointmentRepository appointmentRepository;
     private final DoctorRepository doctorRepository;
     private final PatientRepositry patientRepositry;
+    private final ModelMapper modelMapper;
 
     @Transactional
-    public Appointment createnewAppointment(Appointment appointment,Long patient_id,Long doctor_id){
-        Doctor doctor=doctorRepository.findById(doctor_id).orElseThrow(()->new IllegalArgumentException("Doctor is not exits eith this id: "+ doctor_id));
-        Patient patient=patientRepositry.findById(patient_id).orElseThrow(()->new IllegalArgumentException("Patient is not exits with this id: "+patient_id));
-        if(appointment.getId()!=null) throw  new IllegalArgumentException("Appointment should not have ID.");
+    public AppointmentResponcedto createnewAppointment(CreateAppointmentRequestDto createAppointmentRequestDto){
+        Long doctorId= createAppointmentRequestDto.getDoctor_id();
+        Long patientId= createAppointmentRequestDto.getPatient_id();
+        Doctor doctor=doctorRepository.findById(doctorId).orElseThrow(()->new IllegalArgumentException("Doctor Are not exits with this id:"+doctorId));
+        Patient patient=patientRepositry.findById(patientId).orElseThrow(()->new IllegalArgumentException("Patient is not exits with this id:"+ patientId));
+        Appointment appointment=Appointment.builder()
+                .reason(createAppointmentRequestDto.getReason())
+                .appointmentTime(createAppointmentRequestDto.getAppointmentTime())
+                .build();
         appointment.setPatient(patient);
         appointment.setDoctor(doctor);
-        patient.getAppointments().add(appointment);//getAppoinments add a appoinments to the existing list//this is for bi dirctional case
-//        patient.setAppointments(appointment);//setAppoinments replaces the whole existing list
-        Appointment newappoinment= appointmentRepository.save(appointment);
-        return newappoinment;
+        patient.getAppointments().add(appointment);
+        Appointment newappointment=appointmentRepository.save(appointment);
+        return modelMapper.map(newappointment, AppointmentResponcedto.class);
     }
 
     @Transactional

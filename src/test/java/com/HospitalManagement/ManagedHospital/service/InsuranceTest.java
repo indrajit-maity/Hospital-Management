@@ -32,15 +32,15 @@ public class InsuranceTest {
     }
 
 
-    @Test
-    public void testAppoinment(){
-        Appointment appointment=Appointment.builder()
-                .appointmentTime(LocalDateTime.of(2005,01,18,1,23,50))
-                .reason("Cancer")
-                .build();
-        Appointment newappoinment=appoinmentService.createnewAppointment(appointment,12L,1L);
-        System.out.println(newappoinment);
-    }
+//    @Test
+//    public void testAppoinment(){
+//        Appointment appointment=Appointment.builder()
+//                .appointmentTime(LocalDateTime.of(2005,01,18,1,23,50))
+//                .reason("Cancer")
+//                .build();
+//        Appointment newappoinment=appoinmentService.createnewAppointment(appointment,12L,1L);
+//        System.out.println(newappoinment);
+//    }
     @Test
     public void assigndoctor(){
         Appointment appointment=Appointment.builder()

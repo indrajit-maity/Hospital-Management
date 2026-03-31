@@ -1,7 +1,10 @@
 package com.HospitalManagement.ManagedHospital.controller;
 
+import com.HospitalManagement.ManagedHospital.dto.AppointmentResponcedto;
+import com.HospitalManagement.ManagedHospital.dto.CreateAppointmentRequestDto;
 import com.HospitalManagement.ManagedHospital.dto.PatientDto;
 import com.HospitalManagement.ManagedHospital.entity.Patient;
+import com.HospitalManagement.ManagedHospital.service.AppoinmentService;
 import com.HospitalManagement.ManagedHospital.service.PatientService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -11,12 +14,13 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/hospital")
+@RequestMapping("/patient")
 public class PatientControler {
 
-    public final PatientService patientService;
+    private final PatientService patientService;
+    private final AppoinmentService appoinmentService;
 
-    @GetMapping
+    @GetMapping("/all")
     public ResponseEntity<List<Patient>> getAllpatient(){
         return ResponseEntity.status(HttpStatus.CREATED).body(patientService.getallpatient());
     }
@@ -27,8 +31,14 @@ public class PatientControler {
     }
 
 
-    @PostMapping
+    @PostMapping("/newPatient")
     public ResponseEntity<PatientDto> Addpatient(@RequestBody PatientDto patientDto){
         return ResponseEntity.status(HttpStatus.CREATED).body(patientService.createnewPatient(patientDto));
     }
+
+    @PostMapping("/newAppointment")
+    public ResponseEntity<AppointmentResponcedto> createAppointment(@RequestBody CreateAppointmentRequestDto createAppointmentRequestDto){
+        return ResponseEntity.status(HttpStatus.CREATED).body(appoinmentService.createnewAppointment(createAppointmentRequestDto));
+    }
+
 }

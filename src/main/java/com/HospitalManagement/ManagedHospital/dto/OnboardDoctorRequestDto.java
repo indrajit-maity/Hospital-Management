@@ -12,4 +12,5 @@ public class OnboardDoctorRequestDto {
     private  Long userId;
     private String specalization;
     private String name;
+    private String email;
 }

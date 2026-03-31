@@ -49,6 +49,7 @@ public class DoctorService {
         Doctor doctor=Doctor.builder()
                 .name(onboardDoctorRequestDto.getName())
                 .specalization(onboardDoctorRequestDto.getSpecalization())
+                .email(onboardDoctorRequestDto.getEmail())
                 .user(user)
                 .build();
 
