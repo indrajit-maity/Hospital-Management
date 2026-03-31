@@ -10,7 +10,7 @@ import java.util.Set;
 
 @Entity
 @Builder
-@ToString
+//@ToString
 @Getter
 @Setter
 @AllArgsConstructor
@@ -22,7 +22,9 @@ public class Department {
 
     @Column(nullable = false,unique = true,length = 100)
     private String name;
+
     @OneToOne
+    @JoinColumn(name = "head_doctor_id")
     private Doctor headDoctor;
 
 
@@ -32,5 +34,6 @@ public class Department {
             joinColumns = @JoinColumn(name = "dept_id"),
             inverseJoinColumns = @JoinColumn(name = "doctor_id")
     )
+    @Builder.Default
     private Set<Doctor> doctors=new HashSet<>();
 }

@@ -20,7 +20,7 @@ public interface PatientRepositry extends JpaRepository<Patient,Long> {
 
     List<Patient> findByNameOrEmail(String name, String email);
 
-    @Query("SELECT p FROM Patient p")
+    @Query(value = "SELECT * FROM Patient p",nativeQuery = true)
     Page<Patient> findAllPatients(Pageable pageable);
 
 //    List<Patient> findByNameOrEmail(LocalDate of, String mail);

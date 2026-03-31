@@ -15,6 +15,11 @@ import java.util.List;
 @Getter
 @Setter
 @Builder
+@Table(name = "patient",
+        uniqueConstraints = @UniqueConstraint(name = "unique_patientName_birthDate",
+        columnNames ={"name","birthdate"}),
+        indexes = @Index(name = "idx_patient_birthdate",columnList = "birthdate")
+)
 @AllArgsConstructor
 @NoArgsConstructor
 public class Patient {
