@@ -1,0 +1,41 @@
+Line 1 — Creating the unauthenticated token
+java:
+new UsernamePasswordAuthenticationToken(
+    loginRequestDto.getUsername(),
+    loginRequestDto.getPassword()
+)
+This creates a "dumb" token object that just holds credentials.
+It is not yet authenticated — isAuthenticated() is false at this point.
+ It's simply packaging the credentials so Spring Security can process them.
+
+
+
+ Line 2 — authenticationManager.authenticate()
+ This is where the real work begins.
+ Spring's ProviderManager (which implements AuthenticationManager) receives your
+ token and internally calls DaoAuthenticationProvider, which does two things:
+
+ 1.Calls UserDetailsService.loadUserByUsername(username) —
+                        this hits your database and returns a UserDetails object (your User class).
+ 2.Calls passwordEncoder.matches(rawPassword, storedHash) —
+                        compares what the user typed against the BCrypt hash in the DB.
+
+ If both succeed, it returns a fully authenticated Authentication object with isAuthenticated() = true.
+ If either fails, it throws BadCredentialsException.
+
+
+
+
+Line 3 — authentication.getPrincipal()
+javaUser user = (User) authentication.getPrincipal();
+getPrincipal() returns the UserDetails object that loadUserByUsername() gave back.
+You cast it to your own User entity so you can access user.getId() etc.
+ This is safe because Spring stored your exact object.
+
+
+
+ Line 4 — Token generation and response
+ javaString token = authUtil.generateAccessToken(user);
+ return new LoginResponseDto(token, user.getId());
+ You use the authenticated User to sign a JWT (your authUtil likely uses the user's ID/username/roles as JWT claims).
+ Then you return the token and user ID to the client.

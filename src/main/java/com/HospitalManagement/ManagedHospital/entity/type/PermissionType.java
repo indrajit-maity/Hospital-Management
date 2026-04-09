@@ -1,0 +1,17 @@
+package com.HospitalManagement.ManagedHospital.entity.type;
+
+
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+
+@Getter
+@RequiredArgsConstructor
+public enum PermissionType {
+    PATIENT_READ("patient:read"),
+    PATIENT_WRITE("patient:write"),
+    APPOINTMENT_READ("appointment:read"),
+    APPOINTMENT_WRITE("appointment:write"),
+    USER_Manage("user:manage"),
+    REPORT_VIEW("report:view");
+    private final String permission;
+}
